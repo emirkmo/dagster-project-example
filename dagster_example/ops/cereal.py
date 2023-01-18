@@ -52,3 +52,10 @@ def display_results(most_calories: str, most_protein: str) -> Nothing:
     logger = get_dagster_logger()
     logger.info(f"Most caloric cereal: {most_calories}")
     logger.info(f"Most protein-rich cereal: {most_protein}")
+
+
+@op
+def fail_op(cereals: List[dict]) -> str:
+    if len(cereals) <= 0:
+        raise RuntimeError("Wow So fail!")
+    return "Wow so pass!"

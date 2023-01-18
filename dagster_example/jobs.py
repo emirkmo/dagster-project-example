@@ -4,6 +4,7 @@ from dagster import job
 from dagster_example.ops.cereal import (
     display_results,
     download_cereals,
+    fail_op,
     find_highest_calorie_cereal,
     find_highest_protein_cereal,
     hello_cereal,
@@ -20,6 +21,17 @@ def hello_cereal_job():
 def complex_job():
     """Example of a more complex Dagster job."""
     cereals = download_cereals()
+    display_results(
+        most_calories=find_highest_calorie_cereal(cereals),
+        most_protein=find_highest_protein_cereal(cereals),
+    )
+
+
+@job
+def complex_job_with_fail():
+    """Example of a more complex Dagster job."""
+    cereals = download_cereals()
+    fail_op()
     display_results(
         most_calories=find_highest_calorie_cereal(cereals),
         most_protein=find_highest_protein_cereal(cereals),
